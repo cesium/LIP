@@ -23,7 +23,7 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode s
 
 sudo apt install apt-transport-https
 sudo apt update
-sudo apt install code -yqq# or code-insiders
+sudo apt install code -yqq # or code-insiders
 
 # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
 sudo update-alternatives --set editor /usr/bin/code
