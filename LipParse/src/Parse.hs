@@ -1,39 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Parse
-    ( Person(..)
-    , parse
+    ( parse
     ) where
 
 
-import Control.Applicative
-
-import Data.Vector 
-
+import           Control.Applicative
 import qualified Data.ByteString.Lazy as BL
-
-import qualified Data.Text.IO  as T
-import qualified Data.Text as T
-import Data.Text (Text)
-
-import Data.Csv
-
-
-data Person = Person
-    { nn :: !Text
-    , nome :: !Text
-    , numero :: !Text
-    , email :: !Text
-    , dia :: !Text
-    , date :: !Text
-    , net :: !Text
-    } deriving Show
-
-instance FromNamedRecord Person where
-    parseNamedRecord r = Person <$> r .: "nn" <*> r .:  "nome" <*> r .: "numero" <*> r .: "email" <*> r .: "dia" <*> r .: "date" <*> r .: "net"
+import           Data.Csv
+import           Data.Text            (Text)
+import qualified Data.Text            as T
+import qualified Data.Text.IO         as T
+import           Data.Vector
+import           Types
 
 
 updateHead :: Text -> [Text] -> [Text]
-updateHead _ [] = []
+updateHead _ []       = []
 updateHead h (_:vals) = h:vals
 
 changeHeaders :: FilePath -> Text -> FilePath -> IO ()
@@ -44,15 +26,19 @@ changeHeaders path content opath = do
 
 getData :: FilePath -> IO (Vector Person)
 getData path  = do
-    cdvData <- BL.readFile path 
+    cdvData <- BL.readFile path
     case decodeByName cdvData of
-        Left r -> error r
+        Left r      -> error r
         Right (_,v) -> pure v
 
-parse :: FilePath -> FilePath -> FilePath -> String -> IO ()
-parse i o headers d = changeHeaders i (T.pack headers) o >> getData o >>= pp (T.pack d)
+parse :: FilePath -> FilePath -> FilePath -> String -> String -> IO ()
+parse i o headers d f = changeHeaders i (T.pack headers) o >> getData o >>= pp (T.pack d) (T.pack f)
 
-pp :: Text -> Vector Person -> IO ()
-pp d v = Data.Vector.mapM_ (\x -> if T.isPrefixOf d (dia x) then (T.putStrLn.ptr) x else pure ()) v where
-    ptr :: Person -> Text
-    ptr p = (nome p) <> " " <>  (numero p) <> " " <>  (email p) <> " " <> (dia p) 
+pp :: Text -> Text -> Vector Person -> IO ()
+pp d f v = let gajos = Data.Vector.filter (T.isPrefixOf (fuso f) . dia) v
+               nGajos = T.pack . show . Data.Vector.length $ gajos
+           in T.putStrLn ("Nº: " <> nGajos) >> Data.Vector.mapM_ (T.putStrLn.ptr) gajos where
+                fuso :: Text -> Text
+                fuso "manha" = d <> ": 9"
+                fuso "tarde" = d <> ": 1"
+                fuso _       = d
