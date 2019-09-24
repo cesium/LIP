@@ -11,8 +11,9 @@ main = do
   repl d f
 
 repl :: String -> String -> IO ()
-repl d f = putStrLn "File (absolute path): " >> getLine >>= \x -> case words x of
-                                                            ["exit"] -> pure ()
-                                                            ["mudar"] -> main
-                                                            [i] -> parse i i "nn,nome,numero,email,dia,date,net" d f
-                                                            _ -> repl d f
+repl d f = putStrLn "File (absolute path): " >>
+           getLine >>= \x -> case words x of
+                          ["exit"]  -> pure ()
+                          ["mudar"] -> main
+                          [i]       -> parse i i "nn,nome,numero,email,dia,date,net" d f
+                          _         -> repl d f
