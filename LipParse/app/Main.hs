@@ -1,13 +1,19 @@
 module Main where
 
-import Parse 
+import           Parse
 
 main :: IO ()
-main = putStrLn "Day: " >> getLine >>= repl 
+main = do
+  putStrLn "Day: "
+  d <- getLine
+  putStrLn "Fuso: "
+  f <- getLine
+  repl d f
 
-repl :: String -> IO ()
-repl d = putStrLn "File (absolute path): " >> getLine >>= \x -> case words x of
-                                                            ["exit"] -> pure ()
-                                                            ["mudar"] -> main
-                                                            [i] -> parse i i "nn,nome,numero,email,dia,date,net" d
-                                                            _ -> repl d  
+repl :: String -> String -> IO ()
+repl d f = putStrLn "File (absolute path): " >>
+           getLine >>= \x -> case words x of
+                          ["exit"]  -> pure ()
+                          ["mudar"] -> main
+                          [i]       -> parse i i "nn,nome,numero,email,dia,date,net" d f
+                          _         -> repl d f
