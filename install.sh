@@ -25,5 +25,8 @@ sudo apt install apt-transport-https
 sudo apt update
 sudo apt install code -yqq # or code-insiders
 
+# add syntax highlight for haskell
+code --install-extension justusadam.language-haskell
+
 # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
 sudo update-alternatives --set editor /usr/bin/code
