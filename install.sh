@@ -49,3 +49,5 @@ else
     sudo pacman -S code
 fi
 
+# install Haskell Syntax Highlighting extension
+sudo code --install-extension justusadam.language-haskell
