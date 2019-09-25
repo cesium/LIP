@@ -31,3 +31,23 @@ Mudar a boot order para USB em primeiro lugar.
 
 # Linux
 Instalação normal.
+
+
+# GPU related problems
+- No `grub`, na opção de boot do distro de linux: `e`
+- Entre o `quiet` e `splash` adicionar uma das flags
+- `ctrl x`
+
+## Flags
+- `acpi_osi=! acpi_osi="Windows 2009"`
+- `nomodeset`
+- `nouveau.modeset=0`
+- `acpi=0`
+
+
+## Permanente
+Quando uma combinação de flags resultar:
+
+- `sudo vi /etc/default/grub`
+- Adicionar a(s) flag(s) no `GRUB_CMDLINE_LINUX_DEFAULT`
+- `sudo update-grub`
