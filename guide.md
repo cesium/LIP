@@ -41,7 +41,7 @@ Instalação normal.
 ## Flags
 - `acpi_osi=! acpi_osi="Windows 2009"`
 - `nomodeset`
-- `noveau.modeset=0`
+- `nouveau.modeset=0`
 - `acpi=0`
 
 
