@@ -26,6 +26,9 @@ if hash apt 2>/dev/null; then
     sudo apt update
     sudo apt install code -yqq # or code-insiders
 
+    # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
+    sudo update-alternatives --set editor /usr/bin/code
+
 else
     # update system
     sudo pacman -Syyu
@@ -45,7 +48,4 @@ else
     #install vscode
     sudo pacman -S code
 fi
-
-# set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
-sudo update-alternatives --set editor /usr/bin/code
 
