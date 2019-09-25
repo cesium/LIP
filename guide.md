@@ -35,7 +35,7 @@ Instalação normal.
 
 # GPU related problems
 - No `grub`, na opção de boot do distro de linux: `e`
-- Entre o `quiet` e `splash` adicionar uma das seguintes flags
+- Entre o `quiet` e `splash` adicionar uma das flags
 - `ctrl x`
 
 ## Flags
