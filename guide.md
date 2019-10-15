@@ -1,5 +1,10 @@
 #  Windows
 
+## Disable device encryption (if applicable)
+**This MUST be done before disabling secure boot**
+
+Select the **Start** button, then select **Settings  > Update & Security > Device encryption**. If Device encryption doesn't appear, it isn't available. **Turn off** device encryption. This may take some time. 
+
 ## Desactivar Fast Boot 
 No simbolo da bateria:
 
