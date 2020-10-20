@@ -1,10 +1,15 @@
 #!/bin/bash
 
 set -e
-if command -v apt 2>/dev/null; then
+
+sudo() { echo "$PASSWORD" | command sudo -S true && command sudo "$@"; }
+
+read -r -s -p "[sudo] password for $LOGNAME: " PASSWORD
+
+if command -v apt &>/dev/null; then
     # update system
-    sudo apt update
-    sudo apt upgrade
+    sudo apt update -y
+    sudo apt upgrade -y
 
     pkgs=(
         haskell-platform # install haskell
@@ -12,7 +17,7 @@ if command -v apt 2>/dev/null; then
         curl # install curl
     )
 
-    sudo apt install -yqq "${pkgs[@]}"
+    sudo apt install -y "${pkgs[@]}"
 
     # install vscode
     curl https://packages.microsoft.com/keys/microsoft.asc |
@@ -23,7 +28,7 @@ if command -v apt 2>/dev/null; then
 
     sudo apt install apt-transport-https
     sudo apt update
-    sudo apt install code -yqq # or code-insiders
+    sudo apt install code -y # or code-insiders
 
     # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
     sudo update-alternatives --set editor /usr/bin/code
@@ -40,4 +45,4 @@ else
 fi
 
 # install Haskell Syntax Highlighting extension
-sudo code --install-extension justusadam.language-haskell
+code --install-extension justusadam.language-haskell
