@@ -5,7 +5,7 @@ This file documents some common problems we encounter during LIPs and some solut
 ## Can't shrink a partition
 ---
 
-![Can't shrink a volume](img/cant-shrink-volume.png)
+![Can't shrink a volume](images/cant-shrink-volume.png)
 
 ### Option 1 (recommended)
 ---
@@ -53,3 +53,25 @@ To fix this issue, follow the following instructions, totally not copy-pasted fr
 > `bcdedit /deletevalue {current} safeboot`
 >
 > Reboot and Windows will automatically start with AHCI drivers enabled.
+
+
+## GPU related problems
+---
+
+- In `grub`, while on the boot option menu: `e`
+- Add one of the flags in between `quiet` and `splash`
+- `ctrl x`
+
+### Flags
+- `acpi_osi=! acpi_osi="Windows 2009"`
+- `nomodeset`
+- `nouveau.modeset=0`
+- `acpi=0`
+
+
+### Making changes permanent
+When a flag combination works:
+
+- `sudo vi /etc/default/grub`
+- Add flags to `GRUB_CMDLINE_LINUX_DEFAULT`
+- `sudo update-grub`
