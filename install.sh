@@ -13,8 +13,9 @@ if command -v apt &>/dev/null; then
 
     pkgs=(
         haskell-platform # install haskell
-        subversion git # install verion controll (svn and git)
+        git # install verion control
         curl # install curl
+        wget
     )
 
     sudo apt install -y "${pkgs[@]}"
@@ -30,18 +31,38 @@ if command -v apt &>/dev/null; then
     sudo apt update
     sudo apt install code -y # or code-insiders
 
+    wget -P /tmp -O discord.deb 'https://discord.com/api/download?platform=linux&format=deb' #Install discord
+    sudo apt install -y /tmp/discord.deb
+
     # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
     sudo update-alternatives --set editor /usr/bin/code
-else
+elif command -v apt &>/dev/null; then
     pkgs=(
         stack # install haskell
         firefox # install firefox
-        subversion git # install version controll
+        git # install version control
         code # install vscode
         discord # install discord
+        curl
+        wget
     )
     # update system
     sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
+else
+    pkgs=(
+        haskell-platform # install haskell
+        git # install verion control
+        curl # install curl
+        wget
+        discord
+        code
+    )
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    sudo dnf -y install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm # Enable rpmfusion repos
+    sudo yum -y update
+    sudo yum -y install "${pkgs[@]}"
+
 fi
 
 # install Haskell Syntax Highlighting extension
