@@ -16,6 +16,7 @@ if command -v apt &>/dev/null; then
         git # install verion control
         curl # install curl
         wget
+        neovim
     )
 
     sudo apt install -y "${pkgs[@]}"
@@ -45,6 +46,7 @@ elif command -v apt &>/dev/null; then
         discord # install discord
         curl
         wget
+        neovim
     )
     # update system
     sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
@@ -56,6 +58,7 @@ else
         wget
         discord
         code
+        neovim
     )
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
