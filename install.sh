@@ -37,7 +37,8 @@ if command -v apt &>/dev/null; then
 
     # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
     sudo update-alternatives --set editor /usr/bin/code
-elif command -v apt &>/dev/null; then
+
+elif command -v pacman &>/dev/null; then
     pkgs=(
         stack # install haskell
         firefox # install firefox
