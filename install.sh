@@ -32,7 +32,7 @@ if command -v apt &>/dev/null; then
     sudo apt update
     sudo apt install code -y # or code-insiders
 
-    wget -P /tmp -O discord.deb 'https://discord.com/api/download?platform=linux&format=deb' #Install discord
+    wget -O /tmp/discord.deb 'https://discord.com/api/download?platform=linux&format=deb' #Install discord
     sudo apt install -y /tmp/discord.deb
 
     # set vscode as the default editor (https://wiki.debian.org/DebianAlternative)
