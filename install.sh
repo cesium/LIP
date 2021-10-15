@@ -40,6 +40,7 @@ if command -v apt &>/dev/null; then
 
 elif command -v pacman &>/dev/null; then
     pkgs=(
+        base-devel
         stack # install haskell
         firefox # install firefox
         git # install version control
