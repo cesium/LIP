@@ -74,10 +74,9 @@ fi
 export BOOTSTRAP_HASKELL_NONINTERACTIVE=1
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 cabal install --lib HUnit
-cabal install --lib HLint
 cabal install --lib gloss
-cabal install --lib hindent
-# outras extenses
+cabal install hlint
+cabal install hindent
 
 # install Haskell Syntax Highlighting extension
 code --install-extension justusadam.language-haskell
