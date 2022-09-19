@@ -4,6 +4,8 @@ set -e
 
 sudo() { echo "$PASSWORD" | command sudo -S true && command sudo "$@"; }
 
+
+
 read -r -s -p "[sudo] password for $LOGNAME: " PASSWORD
 
 if command -v apt &>/dev/null; then
@@ -12,7 +14,6 @@ if command -v apt &>/dev/null; then
     sudo apt upgrade -y
 
     pkgs=(
-        haskell-platform # install haskell
         git # install verion control
         curl # install curl
         wget
@@ -20,6 +21,7 @@ if command -v apt &>/dev/null; then
     )
 
     sudo apt install -y "${pkgs[@]}"
+
 
     # install vscode
     curl https://packages.microsoft.com/keys/microsoft.asc |
@@ -41,7 +43,6 @@ if command -v apt &>/dev/null; then
 elif command -v pacman &>/dev/null; then
     pkgs=(
         base-devel
-        stack # install haskell
         firefox # install firefox
         git # install version control
         code # install vscode
@@ -54,7 +55,6 @@ elif command -v pacman &>/dev/null; then
     sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
 else
     pkgs=(
-        haskell-platform # install haskell
         git # install verion control
         curl # install curl
         wget
@@ -69,6 +69,15 @@ else
     sudo yum -y install "${pkgs[@]}"
 
 fi
+
+# Install Haskell
+export BOOTSTRAP_HASKELL_NONINTERACTIVE=1
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+cabal install --lib HUnit
+cabal install --lib HLint
+cabal install --lib gloss
+cabal install --lib hindent
+# outras extenses
 
 # install Haskell Syntax Highlighting extension
 code --install-extension justusadam.language-haskell
