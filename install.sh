@@ -79,4 +79,4 @@ cabal install hlint
 cabal install hindent
 
 # install Haskell Syntax Highlighting extension
-code --install-extension justusadam.language-haskell
+code --install-extension haskell.haskell
