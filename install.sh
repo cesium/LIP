@@ -18,6 +18,8 @@ if command -v apt &>/dev/null; then
         curl # install curl
         wget
         neovim
+        gcc
+        make
     )
 
     sudo apt install -y "${pkgs[@]}"
@@ -50,6 +52,8 @@ elif command -v pacman &>/dev/null; then
         curl
         wget
         neovim
+        gcc
+        make
     )
     # update system
     sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
@@ -61,6 +65,8 @@ else
         discord
         code
         neovim
+        gcc
+        make
     )
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
