@@ -82,11 +82,10 @@ fi
 export BOOTSTRAP_HASKELL_NONINTERACTIVE=1
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 echo 'source ~/.ghcup/env' >> ~/.bashrc
-. ~/.bashrc
-cabal install --lib HUnit
-cabal install --lib gloss
-cabal install hlint
-cabal install hindent
+~/.ghcup/bin/cabal install --lib HUnit
+~/.ghcup/bin/cabal install --lib gloss
+~/.ghcup/bin/cabal install hlint
+~/.ghcup/bin/cabal install hindent
 
 # install Haskell Syntax Highlighting extension
 code --install-extension haskell.haskell
