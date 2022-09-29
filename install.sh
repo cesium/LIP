@@ -20,6 +20,8 @@ if command -v apt &>/dev/null; then
         neovim
         gcc
         make
+        libgmp-dev
+        freeglut3-dev
     )
 
     sudo apt install -y "${pkgs[@]}"
@@ -79,6 +81,8 @@ fi
 # Install Haskell
 export BOOTSTRAP_HASKELL_NONINTERACTIVE=1
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+echo 'source ~/.ghcup/env' >> ~/.bashrc
+. ~/.bashrc
 cabal install --lib HUnit
 cabal install --lib gloss
 cabal install hlint
