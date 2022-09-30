@@ -14,6 +14,7 @@ if command -v apt &>/dev/null; then
     sudo apt upgrade -y
 
     pkgs=(
+        build-essential
         git # install verion control
         curl # install curl
         wget
@@ -54,8 +55,6 @@ elif command -v pacman &>/dev/null; then
         curl
         wget
         neovim
-        gcc
-        make
     )
     # update system
     sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
@@ -68,6 +67,8 @@ else
         code
         neovim
         gcc
+        gcc-c++
+        kernel-devel
         make
     )
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
