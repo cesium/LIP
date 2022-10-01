@@ -82,7 +82,6 @@ fi
 # Install Haskell
 export BOOTSTRAP_HASKELL_NONINTERACTIVE=1 BOOTSTRAP_HASKELL_GHC_VERSION=recommended BOOTSTRAP_HASKELL_CABAL_VERSION=recommended BOOTSTRAP_HASKELL_INSTALL_STACK=1 BOOTSTRAP_HASKELL_INSTALL_HLS=1 BOOTSTRAP_HASKELL_ADJUST_BASHRC=P
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-echo 'source ~/.ghcup/env' >> ~/.bashrc
 ~/.ghcup/bin/cabal install --lib HUnit
 ~/.ghcup/bin/cabal install --lib gloss
 ~/.ghcup/bin/cabal install hlint
