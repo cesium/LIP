@@ -26,7 +26,59 @@ esac
 
 read -r -s -p "[sudo] password for $LOGNAME: " PASSWORD
 
-if command -v apt &>/dev/null; then
+
+if command -v pacman &>/dev/null; then
+    pkgs=(
+        base-devel
+        git
+        curl
+        wget
+    )
+    # update system
+    sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
+
+    curl https://mise.run | sh
+
+    if [[ "$BASESHELL" == "zsh" || "$BASESHELL" == "bash" ]]; then
+        echo "eval \"\$(~/.local/bin/mise activate $BASESHELL)\"" >> "$SHFILE"
+    elif [[ "$BASESHELL" == "fish" ]]; then
+        echo '~/.local/bin/mise activate fish | source' >> "$HOME/.config/fish/config.fish"
+    fi
+
+    sudo pacman -S docker
+    
+    sudo systemctl enable --now docker.service
+    sudo usermod -aG docker $USER
+    newgrp docker
+
+elif command -v dnf &>/dev/null; then
+
+    pkgs=(
+        git
+        curl
+        wget
+    )
+
+    sudo dnf install -y "${pkgs[@]}"
+
+    curl https://mise.run | sh
+
+    if [[ "$BASESHELL" == "zsh" || "$BASESHELL" == "bash" ]]; then
+        echo "eval \"\$(~/.local/bin/mise activate $BASESHELL)\"" >> "$SHFILE"
+    elif [[ "$BASESHELL" == "fish" ]]; then
+        echo '~/.local/bin/mise activate fish | source' >> "$HOME/.config/fish/config.fish"
+    fi
+
+    sudo dnf -y install dnf-plugins-core
+    sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    
+    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    sudo systemctl enable --now docker.service
+    sudo usermod -aG docker $USER
+    newgrp docker
+
+elif command -v apt &>/dev/null; then
 
     sudo apt update -y
     sudo apt upgrade -y
@@ -66,57 +118,9 @@ if command -v apt &>/dev/null; then
 
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-    echo "Docker installed"
-
-elif command -v pacman &>/dev/null; then
-    pkgs=(
-        base-devel
-        git
-        curl
-        wget
-    )
-    # update system
-    sudo pacman -Syyu --noconfirm --needed "${pkgs[@]}"
-
-    curl https://mise.run | sh
-
-    if [[ "$BASESHELL" == "zsh" || "$BASESHELL" == "bash" ]]; then
-        echo "eval \"\$(~/.local/bin/mise activate $BASESHELL)\"" >> "$SHFILE"
-    elif [[ "$BASESHELL" == "fish" ]]; then
-        echo '~/.local/bin/mise activate fish | source' >> "$HOME/.config/fish/config.fish"
-    fi
-
-    sudo pacman -S docker
-    
-    sudo systemctl start docker.service
-    sudo systemctl enable docker.service
+    sudo systemctl enable --now docker.service
     sudo usermod -aG docker $USER
     newgrp docker
-
-elif command -v dnf &>/dev/null; then
-
-    pkgs=(
-        git
-        curl
-        wget
-    )
-
-    sudo dnf install -y "${pkgs[@]}"
-
-    curl https://mise.run | sh
-
-    if [[ "$BASESHELL" == "zsh" || "$BASESHELL" == "bash" ]]; then
-        echo "eval \"\$(~/.local/bin/mise activate $BASESHELL)\"" >> "$SHFILE"
-    elif [[ "$BASESHELL" == "fish" ]]; then
-        echo '~/.local/bin/mise activate fish | source' >> "$HOME/.config/fish/config.fish"
-    fi
-
-    sudo dnf -y install dnf-plugins-core
-    sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-    
-    sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    sudo systemctl enable --now docker
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     
