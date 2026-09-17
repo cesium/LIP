@@ -4,7 +4,10 @@ set -e
 
 sudo() { echo "$PASSWORD" | command sudo -S true && command sudo "$@"; }
 
-
+if [[ $(id -u) == 0 ]]; then
+    echo "$0 must not be run as root" >&2
+    exit 1
+fi
 
 read -r -s -p "[sudo] password for $LOGNAME: " PASSWORD
 
