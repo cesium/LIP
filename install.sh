@@ -9,6 +9,15 @@ if [[ $(id -u) == 0 ]]; then
     exit 1
 fi
 
+if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
+    BOLD=$'\033[1m'; DIM=$'\033[2m'; UL=$'\033[4m'; RESET=$'\033[0m'
+    GREEN=$'\033[38;5;120m'; CYAN=$'\033[38;5;87m'; PURPLE=$'\033[38;5;141m'
+    GRADIENT=(93 99 105 111 117 123)
+else
+    BOLD=; DIM=; UL=; RESET=; GREEN=; CYAN=; PURPLE=
+    GRADIENT=()
+fi
+
 read -r -s -p "[sudo] password for $LOGNAME: " PASSWORD
 
 if command -v apt &>/dev/null; then
@@ -94,3 +103,13 @@ source ~/.ghcup/env
 
 # install Haskell Syntax Highlighting extension
 code --install-extension haskell.haskell
+
+echo
+echo
+printf '%s%s' "$BOLD" "$GREEN"
+printf "  ✔  Tudo pronto. O resto é contigo."
+printf '%s\n' "$RESET"
+printf '  Podes ver mais do CeSIUM em: %s%s%scesium.link%s\n' "$BOLD" "$CYAN" "$UL" "$RESET"
+printf '%s  (abre um novo terminal para o Haskell ficar disponível)%s\n' "$DIM" "$RESET"
+echo
+echo
